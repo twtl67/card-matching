@@ -1,22 +1,23 @@
 package model;
 
-import com.sun.imageio.plugins.jpeg.JPEG;
-
 public class PhotoCard {
+
+    public String photo_path;
     String name;
-    JPEG photo;
+    NameCard matching_nc;
 
     //CONSTRUCTOR
-    public PhotoCard(String name, JPEG photo) {
+    public PhotoCard(String name, String photo_path) {
         this.name = name;
-        this.photo = photo;
+        this.photo_path = photo_path;
+        matching_nc = new NameCard(name);
     }
 
     public void changeName(String new_name) {
         name = new_name;
     }
 
-    public void changePhoto(JPEG new_photo) {
-        photo = new_photo;
+    public void changePhoto(String new_photo_path) {
+        photo_path = new_photo_path;
     }
 }
