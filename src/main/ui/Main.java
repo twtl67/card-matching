@@ -5,7 +5,7 @@ import com.formdev.flatlaf.intellijthemes.FlatArcOrangeIJTheme;
 public class Main {
 
     public static void main(String[] args) {
-        FlatArcOrangeIJTheme.setup();
+        FlatArcOrangeIJTheme.install();
         new GUI();
     }
 
