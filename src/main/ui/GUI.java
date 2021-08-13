@@ -4,17 +4,18 @@ import model.NameCard;
 import model.PhotoCard;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class GUI implements ActionListener {
 
     private JFrame frame;
-    private JPanel panel;
-    private JPanel left;
-    private JPanel right;
-    private JButton play;
-    private JSlider slider;
+
+    private int WIDTH = 1000;
+    private int HEIGHT = 750;
+
+    CardLayout card;
 
     //when selecting the pair of cards in game
     private NameCard selectedName;
@@ -39,34 +40,58 @@ public class GUI implements ActionListener {
     private NameCard kevinN;
     private NameCard jasonN;
 
-
-
-
     public GUI() {
         runApp();
     }
 
     private void runApp() {
         initCards();
-        frame = new JFrame();
-        panel = new JPanel();
-        left = new JPanel();
-        right = new JPanel();
-
-        frame.setSize(1000, 500);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setTitle("Card Matching Game");
-        frame.add(panel);
-        panel.add(left);
-        panel.add(right);
-
-
-//        panel1.setLayout(new GridLayout(3, 2));
-        left.add(play = new JButton("Play game"));
-        right.add(slider = new JSlider());
-//        ImageIcon icon = new ImageIcon(ethan.photo_path);
-//        panel.add(new JButton(icon));
+        setUpFrame();
+        displayStart();
         frame.setVisible(true);
+    }
+
+    // sets up frame
+    private void setUpFrame() {
+        frame = new JFrame();
+        frame.setTitle("Card Matching Game");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        card = new CardLayout();
+        frame.getContentPane().setLayout(card);
+        frame.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        frame.pack();
+    }
+
+    // displays start menu
+    private void displayStart() {
+      JPanel panel_tmp = new JPanel(); // can add layout to this to add a picture
+      panel_tmp.add(startButton());
+      frame.getContentPane().add(panel_tmp);
+    }
+
+    // start button w/ action listener
+    private JButton startButton() {
+        JButton start = new JButton("START");
+        start.addActionListener(e -> playGame());
+        return start;
+    }
+
+    // sets up game panels, goes to next card panel (game)
+    private void playGame() {
+        setUpGame();
+        card.next(frame.getContentPane());
+    }
+
+    // sets up area for game
+    private void setUpGame() {
+        JPanel back = new JPanel(new GridLayout(0,2));
+        JPanel left = new JPanel();
+        JPanel right = new JPanel();
+        left.setBackground(Color.orange); // I set these different colours to see if it works
+        right.setBackground(Color.white); // I set these different colours to see if it works
+        back.add(left);
+        back.add(right);
+        frame.getContentPane().add(back);
     }
 
     @Override
