@@ -12,16 +12,15 @@ import java.util.Arrays;
 import java.util.Collections;
 
 public class GUI implements ActionListener {
-
     private JFrame frame;
+    CardLayout card;
 
     private int WIDTH = 1000;
     private int HEIGHT = 750;
 
     //number of cards
     private final int NUM = 8;
-
-    CardLayout card;
+    public int myelin = 0;
 
     //when selecting the pair of cards in game
     private NameCard selectedName;
@@ -51,11 +50,9 @@ public class GUI implements ActionListener {
     private NameCard[] lon;
 
     //lists of photo buttons
-    //private JButton[] lopb;
     private ArrayList<JButton> lopb = new ArrayList<JButton>(8);
     //lists of name buttons
     private ArrayList<JButton> lonb = new ArrayList<JButton>(8);
-    //private JButton[] lonb;
 
     //selection process
     private int cardsSelected = 0;
@@ -100,8 +97,10 @@ public class GUI implements ActionListener {
     // home button w/o action listener
     private JButton homeButton() {
         JButton home = new JButton("HOME");
-        home.setFont(new Font(home.getFont().toString(),Font.BOLD,80));
+        home.setFont(new Font(home.getFont().toString(),Font.BOLD,60));
         home.setBackground(Color.white);
+//        awaits integration
+//        home.addActionListener(e -> home());
         return home;
     }
 
@@ -213,7 +212,9 @@ public class GUI implements ActionListener {
         nameCardSelected = "";
 
         if (checkWon()){
-            popup("Congrats! You have won the game. You have earned 15 Myelin! " , "");
+            popup("Congrats! You have won the game."+"/n"
+                    +" You have earned 15 Myelin! " , "");
+            myelin +=15;
         }
     }
 
