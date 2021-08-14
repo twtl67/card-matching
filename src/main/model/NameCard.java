@@ -12,4 +12,7 @@ public class NameCard {
         name = new_name;
     }
 
+    public String getName() {
+        return name;
+    }
 }

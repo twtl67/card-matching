@@ -18,4 +18,12 @@ public class PhotoCard {
     public void changePhoto(String new_photo_path) {
         photo_path = new_photo_path;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getPhoto_path() {
+        return photo_path;
+    }
 }
