@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
@@ -18,7 +19,7 @@ public class GUI implements ActionListener {
     private int HEIGHT = 750;
 
     //number of cards
-    private final int NUM = 7;
+    private final int NUM = 8;
 
     CardLayout card;
 
@@ -50,9 +51,11 @@ public class GUI implements ActionListener {
     private NameCard[] lon;
 
     //lists of photo buttons
-    private JButton[] lopb;
+    //private JButton[] lopb;
+    private ArrayList<JButton> lopb = new ArrayList<JButton>(8);
     //lists of name buttons
-    private JButton[] lonb;
+    private ArrayList<JButton> lonb = new ArrayList<JButton>(8);
+    //private JButton[] lonb;
 
     //selection process
     private int cardsSelected = 0;
@@ -157,9 +160,8 @@ public class GUI implements ActionListener {
 //            button.setIcon((Icon) resizedPhoto);
 
             button.addActionListener(e -> photoButtonClicked(button));
-//            button.setBorder(BorderFactory.createLineBorder(Color.WHITE));
             panel.add(button);
-//            lopb[i] = button;
+            lopb.add(button);
         }
     }
 
@@ -175,7 +177,7 @@ public class GUI implements ActionListener {
             button.addActionListener(e -> nameButtonClicked(button));
 //            button.setBorder(BorderFactory.createLineBorder(Color.WHITE));
             panel.add(button);
-//            lonb[i] = button;
+            lonb.add(button);
         }
     }
 
@@ -191,25 +193,43 @@ public class GUI implements ActionListener {
         } else if (!photoCardSelected.equals(nameCardSelected) &&
                 !photoCardSelected.equals("") && !nameCardSelected.equals("")) {
             popup("Try again!", "Aw...");
-            resetSelected();
+            photoCardSelected = "";
+            nameCardSelected = "";
         }
     }
 
     private void resetSelected() {
-//        for (int i = 0;i < NUM; i++){
-//            if(lopb[i].getName().equals(photoCardSelected)){
-//                lopb[i].setBackground(Color.BLACK);
-//            }
-//        }
-//        for (int i = 0;i < NUM; i++){
-//            if(lonb[i].getName().equals(nameCardSelected)){
-//                lonb[i].setBackground(Color.BLACK);
-//            }
-//        }
+        for (int i = 0;i < NUM; i++){
+            if(lopb.get(i).getName().equals(photoCardSelected)){
+                lopb.get(i).setEnabled(false);
+            }
+        }
+        for (int i = 0;i < NUM; i++){
+            if(lonb.get(i).getName().equals(nameCardSelected)){
+                lonb.get(i).setEnabled(false);
+            }
+        }
         photoCardSelected = "";
         nameCardSelected = "";
 
+        if (checkWon()){
+            popup("Congrats! You have won the game. You have earned 15 Myelin! " , "");
+        }
+    }
 
+    private boolean checkWon(){
+        int buttonsPressed = 0;
+        for(JButton button:lopb){
+            if(!button.isEnabled()){
+                buttonsPressed++;
+            }
+        }
+
+        if (buttonsPressed == NUM){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     @Override
