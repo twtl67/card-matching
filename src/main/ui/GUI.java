@@ -16,6 +16,7 @@ public class GUI implements ActionListener {
 
     private int WIDTH = 1000;
     private int HEIGHT = 750;
+
     //number of cards
     private final int NUM = 7;
 
@@ -83,23 +84,44 @@ public class GUI implements ActionListener {
 
     // displays start menu
     private void displayStart() {
-      JPanel panel_tmp = new JPanel(); // can add layout to this to add a picture
-      panel_tmp.add(startButton());
-      panel_tmp.add(homeButton());
-      frame.getContentPane().add(panel_tmp);
+        JPanel panel_tmp = new JPanel(new GridLayout(4, 0)); // can add layout to this to add a picture
+        JLabel banner = new JLabel("CARD MATCH", SwingConstants.CENTER);
+        banner.setFont(new Font(banner.getFont().toString(),Font.BOLD, 100));
+        panel_tmp.add(banner);
+        panel_tmp.add(startButton());
+        panel_tmp.add(homeButton());
+        panel_tmp.add(whyButton());
+        frame.getContentPane().add(panel_tmp);
     }
 
     // home button w/o action listener
     private JButton homeButton() {
         JButton home = new JButton("HOME");
+        home.setFont(new Font(home.getFont().toString(),Font.BOLD,80));
+        home.setBackground(Color.white);
         return home;
     }
 
     // start button w/ action listener
     private JButton startButton() {
         JButton start = new JButton("START");
+        start.setFont(new Font(start.getFont().toString(),Font.BOLD,80));
+        start.setBackground(Color.orange);
         start.addActionListener(e -> playGame());
         return start;
+    }
+
+    // why play this game? w/ action listener
+    private JButton whyButton() {
+        JButton why = new JButton("WHY PLAY?");
+        why.setFont(new Font(why.getFont().toString(),Font.BOLD,80));
+        why.setBackground(Color.orange);
+        why.addActionListener(e -> whyPlay());
+        return why;
+    }
+
+    private void whyPlay() {
+        popup("This game is great because it can help you remember your loved ones!", "Why Play This Game?");
     }
 
     // sets up game panels, goes to next card panel (game)
@@ -110,10 +132,10 @@ public class GUI implements ActionListener {
 
     // sets up area for game
     private void setUpGame() {
-        JPanel back = new JPanel(new GridLayout(0,2));
+        JPanel back = new JPanel(new GridLayout(0, 2));
         //based on 7 cards, can be changed
-        JPanel left = new JPanel(new GridLayout(4,2));
-        JPanel right = new JPanel(new GridLayout(4,2));
+        JPanel left = new JPanel(new GridLayout(4, 2));
+        JPanel right = new JPanel(new GridLayout(4, 2));
         left.setBackground(Color.orange); // I set these different colours to see if it works
         right.setBackground(Color.white); // I set these different colours to see if it works
         back.add(left);
@@ -124,8 +146,8 @@ public class GUI implements ActionListener {
         makeNameButton(right);
     }
 
-    private void makePhotoButton(JPanel panel){
-        for(int i = 0; i<NUM; i++){
+    private void makePhotoButton(JPanel panel) {
+        for (int i = 0; i < NUM; i++) {
             final JButton button = new JButton();
             button.setName(lop[i].getName());
             button.setIcon(new ImageIcon(lop[i].getPhoto_path()));
@@ -141,13 +163,13 @@ public class GUI implements ActionListener {
         }
     }
 
-    private void photoButtonClicked(JButton button){
+    private void photoButtonClicked(JButton button) {
         photoCardSelected = button.getName();
         checkCorrect();
     }
 
-    private void makeNameButton(JPanel panel){
-        for(int i = 0; i<NUM; i++){
+    private void makeNameButton(JPanel panel) {
+        for (int i = 0; i < NUM; i++) {
             final JButton button = new JButton(lon[i].getName());
             button.setName(lon[i].getName());
             button.addActionListener(e -> nameButtonClicked(button));
@@ -157,23 +179,23 @@ public class GUI implements ActionListener {
         }
     }
 
-    private void nameButtonClicked(JButton button){
+    private void nameButtonClicked(JButton button) {
         nameCardSelected = button.getName();
         checkCorrect();
     }
 
-    private void checkCorrect(){
-        if(photoCardSelected.equals(nameCardSelected)){
-            popup("Correct!","");
+    private void checkCorrect() {
+        if (photoCardSelected.equals(nameCardSelected)) {
+            popup("Correct!", "You Are...");
             resetSelected();
-        }else if(!photoCardSelected.equals(nameCardSelected) &&
-                !photoCardSelected.equals("") && !nameCardSelected.equals("")){
-            popup("Try again!", "");
+        } else if (!photoCardSelected.equals(nameCardSelected) &&
+                !photoCardSelected.equals("") && !nameCardSelected.equals("")) {
+            popup("Try again!", "Aw...");
             resetSelected();
         }
     }
 
-    private void resetSelected(){
+    private void resetSelected() {
 //        for (int i = 0;i < NUM; i++){
 //            if(lopb[i].getName().equals(photoCardSelected)){
 //                lopb[i].setBackground(Color.BLACK);
@@ -195,15 +217,15 @@ public class GUI implements ActionListener {
     }
 
     private void initCards() {
-        ethan = new PhotoCard("Ethan","src/Ethan.jpeg");
-        winnie = new PhotoCard("Winnie","src/Winnie.jpeg");
-        amy = new PhotoCard("Amy","src/Amy.jpeg");
-        jubelle = new PhotoCard("Jubelle","src/Jubelle.jpeg");
-        terry = new PhotoCard("Terry","src/Terry.JPG");
-        polina = new PhotoCard("Polina","src/Polina.jpeg");
-        kevin = new PhotoCard("Kevin","src/Kevin.jpeg");
-        jason = new PhotoCard("Jason","src/Jason.jpeg");
-        lop = new PhotoCard[]{ethan,winnie,amy,jubelle,terry,polina,kevin,jason};
+        ethan = new PhotoCard("Ethan", "src/Ethan smaller.jpeg");
+        winnie = new PhotoCard("Winnie", "src/Winnie smaller.jpeg");
+        amy = new PhotoCard("Amy", "src/Amy smaller.jpeg");
+        jubelle = new PhotoCard("Jubelle", "src/Jubelle smaller.jpeg");
+        terry = new PhotoCard("Terry", "src/Terry smaller.JPG");
+        polina = new PhotoCard("Polina", "src/Polina smaller.jpeg");
+        kevin = new PhotoCard("Kevin", "src/Kevin smaller.jpeg");
+        jason = new PhotoCard("Jason", "src/Jason smaller.jpeg");
+        lop = new PhotoCard[]{ethan, winnie, amy, jubelle, terry, polina, kevin, jason};
         Collections.shuffle(Arrays.asList(lop));
 
         ethanN = new NameCard("Ethan");
@@ -214,13 +236,12 @@ public class GUI implements ActionListener {
         polinaN = new NameCard("Polina");
         kevinN = new NameCard("Kevin");
         jasonN = new NameCard("Jason");
-        lon = new NameCard[]{ethanN,winnieN,amyN,jubelleN,terryN,polinaN,kevinN,jasonN};
+        lon = new NameCard[]{ethanN, winnieN, amyN, jubelleN, terryN, polinaN, kevinN, jasonN};
         Collections.shuffle(Arrays.asList(lon));
     }
 
     //EFFECTS: create a pop up message box
     private void popup(String msg, String title) {
-        JOptionPane.showMessageDialog(null, msg, "InfoBox "
-                + title, JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, msg, title, JOptionPane.INFORMATION_MESSAGE);
     }
 }
